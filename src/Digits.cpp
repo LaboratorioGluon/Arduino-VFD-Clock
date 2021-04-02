@@ -5,8 +5,10 @@
 #define INTERDIGIT_MS 3
 
 
+
 namespace Digits
 {
+
 
     /*
         Orden: DP, 10, 6, 5, 4, 3, 2, 1
@@ -45,7 +47,9 @@ namespace Digits
         0b10000110, //J
         0b00000001, //K
         0b00011100, //L
-
+        0b00000000, //Pos 22 (vacio)
+        0b11110000, // Degree
+        0b00100000, // Minus
     };
 
     uint8_t digitsValues[4] = {0};
@@ -72,9 +76,16 @@ namespace Digits
         if(digit < 10){
             return digit;
         }else if(digit <= 'L' && digit >= 'A'){
-            return digit-'A';
+            return 10 + digit-'A';
         }else{
-            return 0;
+            // Special symbol
+            switch(digit){
+                case SYMBOL_BLANK:  return SYMBOLS::EMPTY; break;
+                case SYMBOL_DEGREE: return SYMBOLS::DEGREE; break;
+                case SYMBOL_MINUS:  return SYMBOLS::MINUS; break;
+                default:
+                    return SYMBOLS::EMPTY;
+            }
         }
     }
 

@@ -8,13 +8,32 @@
 #define LED_G 10
 #define LED_B 11
 
+#define TEMP_PIN A7
+
+#define ANALOG_TO_MV 4.88f
+#define TEMP_MV_AT_0 500.0f
+#define TEMP_MV_TO_C 1/10.0f
+
+int8_t lastTemperature;
+
 void extrasInit(){
     pinMode(EXTRAS_BUZZER_PIN, OUTPUT);
 
     analogWrite(LED_R,0);
-    analogWrite(LED_G,128);
-    analogWrite(LED_B,128);
+    analogWrite(LED_G,0);
+    analogWrite(LED_B,0);
 
+    lastTemperature = 0;
+    updateTemperature();
+    
+}
+
+void updateTemperature(){
+    float temp;
+    int intTemp;
+    intTemp = analogRead(TEMP_PIN);
+    temp = ((float)intTemp * ANALOG_TO_MV - TEMP_MV_AT_0)*TEMP_MV_TO_C;
+    lastTemperature = temp;
 }
 
 void setLEDs(uint8_t r, uint8_t g, uint8_t b){

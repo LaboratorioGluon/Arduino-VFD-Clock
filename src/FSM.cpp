@@ -1,11 +1,12 @@
 #include "FSM.h"
 
-__FSM_STATES__ currentState;
+FSM_State *currentState;
 
-void fsmInit(){
-    currentState = STATE_CLOCK;
+
+
+void fsmInit(FSM_State* pCurrentState){
+    currentState = pCurrentState;
 }
-
 
 
 void updateClock(float dt){
@@ -23,10 +24,13 @@ void updateSetTime(float dt){
 }
 
 void fsmUpdate(float dt){
-    switch(currentState){
-        case STATE_CLOCK:   updateClock(dt);   break;
-        case STATE_TEMP:    updateTemp(dt);    break;
-        case STATE_SETTIME: updateSetTime(dt); break;
-        default: updateClock(dt);
+    currentState->func();
+}
+
+void fsmInput(Inputs::BUTTON_PRESSED btn){
+    if(currentState->inputFunc == nullptr){
+        if(btn == Inputs::BUTTON_PRESSED::MENU){
+            currentState = currentState->nextState;
+        }
     }
 }

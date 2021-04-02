@@ -15,9 +15,17 @@
 #define GRID_3 4
 #define GRID_4 5
 
-
+#define SYMBOL_BLANK ' '
+#define SYMBOL_DEGREE '.'
+#define SYMBOL_MINUS '-'
 
 namespace Digits{
+
+    enum SYMBOLS{
+        EMPTY = 22,
+        DEGREE,
+        MINUS
+    };
 
     extern uint8_t charToDigitTable[];
     extern uint8_t digitsValues[4];

@@ -56,16 +56,15 @@ void loop() {
     rtcUpdate();
   }
 
-  if(cycle%20 == 0){
-    Inputs::update();
-  }
+  
+  Inputs::update();
   
 
   fsmUpdate(MAIN_LOOP_MS);
 
   Digits::updateDigits();
 
-  fsmInput(Inputs::lastButton);
+  fsmInput(Inputs::newButton);
   
 
   // Forzamos esperar MAIN_LOOP_MS
@@ -74,7 +73,8 @@ void loop() {
     delay(MAIN_LOOP_MS - millisDiff);
   }
 
-  Inputs::update();
+  //Inputs::update();
+  Inputs::resetInput();
   lastMillis = millis();
   cycle++;  
 

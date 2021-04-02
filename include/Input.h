@@ -12,8 +12,11 @@ namespace Inputs
     };
 
     extern BUTTON_PRESSED lastButton;
+    extern BUTTON_PRESSED newButton;
 
     void update();
+
+    void resetInput();
 
 } // namespace Inputs
 

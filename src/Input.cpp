@@ -33,7 +33,6 @@ namespace Inputs
             swAnalogValue=(adcRead > swAnalogValue)?adcRead:swAnalogValue;
         }
 
-        Serial.println(swAnalogValue);
         BUTTON_PRESSED lButton = BUTTON_PRESSED::NONE;
 
         if(swAnalogValue < 150){
@@ -51,7 +50,6 @@ namespace Inputs
         if( lButton != lastButton ){
             lastButton = lButton;
             newButton = lButton;
-            Serial.print("Actualizando boton a :");Serial.println(lButton);
         }
 
     }

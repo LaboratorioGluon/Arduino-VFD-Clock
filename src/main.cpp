@@ -8,6 +8,11 @@
 
 #define MAIN_LOOP_MS 20
 
+// TEMP- LED control
+#define TEMP_LED_MAX 180
+#define TEMP_LED_MIN 20
+#define TEMP_LED_SPEED 3
+
 unsigned long lastMillis;
 
 
@@ -20,7 +25,28 @@ void fsmClockInput(void){
 }
 
 void fsmTempFunc(void){
+  static uint16_t ledValue = 0;
+  static int8_t ledDir = 1; // 1: Arriba, -1 :Abajo
+
   Digits::setDigits(lastTemperature/10,lastTemperature%10,SYMBOL_DEGREE,'C');
+  
+  ledValue += ledDir*TEMP_LED_SPEED;
+
+  if(ledValue >= TEMP_LED_MAX)
+  {
+    ledDir = -1;
+    ledValue = TEMP_LED_MAX;
+  }else if(ledValue <= TEMP_LED_MIN)
+  {
+    ledDir = 1;
+    ledValue = TEMP_LED_MIN;
+  }
+
+  if(lastTemperature > 22){
+    setLEDs(ledValue,0,0);
+  }else{
+    setLEDs(0,0,ledValue);
+  }
 }
 
 void fsmTempInput(void){
